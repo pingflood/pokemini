@@ -58,7 +58,7 @@ char *Joy_KeysNames[] = {
 	"R"			// 11
 };
 int Joy_KeysMapping[] = {
-	1,		// Menu
+	0,		// Menu
 	6,		// A
 	7,		// B
 	9,		// C
@@ -66,7 +66,7 @@ int Joy_KeysMapping[] = {
 	3,		// Down
 	4,		// Left
 	5,		// Right
-	0,		// Power
+	1,		// Power
 	11		// Shake
 };
 
