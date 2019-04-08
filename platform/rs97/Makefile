@@ -12,7 +12,7 @@ SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
 SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
 BUILD = Build
-TARGET = pokemini.dge
+TARGET = pokemini/pokemini.dge
 POKEROOT = ../../
 
 INCLUDE = $(foreach inc, $(INCDIRS), -I$(POKEROOT)$(inc))
@@ -95,7 +95,18 @@ $(TARGET): $(BUILDOBJS)
 	$(LD) -o $(TARGET) $(BUILDOBJS) $(LDFLAGS)
 	$(STRIP) $(TARGET)
 
+ipk:  $(BUILD) $(TARGET)
+	@rm -rf /tmp/.pokemini-ipk/ && mkdir -p /tmp/.pokemini-ipk/root/home/retrofw/emus/pokemini /tmp/.pokemini-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators /tmp/.pokemini-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators.systems
+	@cp -r pokemini/pokemini.dge pokemini/pokemini.man.txt pokemini/pokemini.png /tmp/.pokemini-ipk/root/home/retrofw/emus/pokemini
+	@cp pokemini/pokemini.lnk /tmp/.pokemini-ipk/root/home/retrofw/apps/gmenu2x/sections/emulators
+	@sed "s/^Version:.*/Version: $$(date +%Y%m%d)/" pokemini/control > /tmp/.pokemini-ipk/control
+	@cp pokemini/conffiles /tmp/.pokemini-ipk/
+	@tar --owner=0 --group=0 -czvf /tmp/.pokemini-ipk/control.tar.gz -C /tmp/.pokemini-ipk/ control conffiles
+	@tar --owner=0 --group=0 -czvf /tmp/.pokemini-ipk/data.tar.gz -C /tmp/.pokemini-ipk/root/ .
+	@echo 2.0 > /tmp/.pokemini-ipk/debian-binary
+	@ar r pokemini/pokemini.ipk /tmp/.pokemini-ipk/control.tar.gz /tmp/.pokemini-ipk/data.tar.gz /tmp/.pokemini-ipk/debian-binary
+
 clean:
-	-rm -f $(BUILDOBJS) $(TARGET)
-	-rmdir --ignore-fail-on-non-empty $(BUILD)
+	-rm -f $(BUILDOBJS) $(TARGET) pokemini/pokemini.ipk
+	-rm -rf $(BUILD)
 
