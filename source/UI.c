@@ -1419,7 +1419,8 @@ void UIMenu_Display_16(uint16_t *screen, int pitchW)
 			}
 
 			// Loaded ROM
-			sprintf(text, "ROM: %s", CommandLine.min_file);
+			// sprintf(text, "ROM: %s", basename(CommandLine.min_file));
+			sprintf(text, basename(CommandLine.min_file));
 			text[(UIMenu_Width/padd)-1] = 0; // Avoid string going out of the screen
 			UIDraw_String_16(screen, pitchW, 2, 20 + (UIMenu_MMax+1)*12, padd, text, UI_Font1_Pal16);
 		}
