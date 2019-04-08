@@ -224,10 +224,10 @@ TUIMenu_Item UIItems_MainMenu[] = {
 #ifndef NO_SCANDIRS
 	{ 0,  1, "Load ROM", UIItems_MainMenuC },
 #endif
-	{ 0,  2, "Load State <0>", UIItems_MainMenuC },
-	{ 0,  3, "Save State <0>", UIItems_MainMenuC },
-	{ 0,  4, "Reset <Hard>", UIItems_MainMenuC },
-	{ 0,  5, "Options", UIItems_MainMenuC },
+	{ 0,  2, "Load State     0", UIItems_MainMenuC },
+	{ 0,  3, "Save State     0", UIItems_MainMenuC },
+	{ 0,  4, "Reset          Hard", UIItems_MainMenuC },
+	{ 0,  5, "Settings", UIItems_MainMenuC },
 	{ 0,  6, "Platform", UIItems_MainMenuC },
 	{ 0,  7, "About", UIItems_MainMenuC },
 	{ 0,  8, "Exit", UIItems_MainMenuC },
@@ -237,24 +237,24 @@ TUIMenu_Item UIItems_MainMenu[] = {
 int UIItems_OptionsC(int index, int reason);
 TUIMenu_Item UIItems_Options[] = {
 	// { 0,  0, "Go Back...", UIItems_OptionsC },
-	{ 0,  1, "Palette: %s", UIItems_OptionsC },
-	{ 0,  2, "LCD Mode: %s", UIItems_OptionsC },
-	{ 0,  3, "LCD Filter: %s", UIItems_OptionsC },
-	{ 0, 10, "Contrast: %i%%", UIItems_OptionsC },
-	{ 0, 11, "Bright: %i%%", UIItems_OptionsC },
-	{ 0,  4, "Sound: %s", UIItems_OptionsC },
-	{ 0,  5, "Piezo Filter: %s", UIItems_OptionsC },
-	{ 0,  6, "PM Battery: %s", UIItems_OptionsC },
-	{ 0,  7, "RTC: %s", UIItems_OptionsC },
-	{ 0,  8, "Shared EEP.: %s", UIItems_OptionsC },
-	{ 0,  9, "Force FreeBIOS: %s", UIItems_OptionsC },
+	{ 0,  1, "Palette        %s", UIItems_OptionsC },
+	{ 0,  2, "LCD Mode       %s", UIItems_OptionsC },
+	{ 0,  3, "LCD Filter     %s", UIItems_OptionsC },
+	{ 0, 10, "Contrast       %i%%", UIItems_OptionsC },
+	{ 0, 11, "Bright         %i%%", UIItems_OptionsC },
+	{ 0,  4, "Sound          %s", UIItems_OptionsC },
+	{ 0,  5, "Piezo Filter   %s", UIItems_OptionsC },
+	{ 0,  6, "PM Battery     %s", UIItems_OptionsC },
+	{ 0,  7, "RTC            %s", UIItems_OptionsC },
+	{ 0,  8, "Shared EEPROM  %s", UIItems_OptionsC },
+	{ 0,  9, "Force FreeBIOS %s", UIItems_OptionsC },
 #ifndef PERFORMANCE
-	{ 0, 20, "Multicart: %s", UIItems_OptionsC },
+	{ 0, 20, "Multicart      %s", UIItems_OptionsC },
 #endif
-	{ 0, 50, "Sync Cycles: %d", UIItems_OptionsC },
+	{ 0, 50, "Sync Cycles    %d", UIItems_OptionsC },
 	{ 0, 60, "Reload Color Info", UIItems_OptionsC },
 	{ 0, 99, "Save Settings", UIItems_OptionsC },
-	{ 9,  0, "Options", UIItems_OptionsC }
+	{ 9,  0, "Settings", UIItems_OptionsC }
 };
 
 int UIItems_PalEditC(int index, int reason);
@@ -720,18 +720,18 @@ int UIItems_MainMenuC(int index, int reason)
 	}
 
 	// Update items
-	UIMenu_ChangeItem(UIItems_MainMenu, 2, "Load State <%d>", UIMenu_Savestate);
-	UIMenu_ChangeItem(UIItems_MainMenu, 3, "Save State <%d>", UIMenu_Savestate);
-	UIMenu_ChangeItem(UIItems_MainMenu, 4, "Reset <%s>", UIMenu_HardReset ? "Hard" : "Soft");
+	UIMenu_ChangeItem(UIItems_MainMenu, 2, "Load State     %d", UIMenu_Savestate);
+	UIMenu_ChangeItem(UIItems_MainMenu, 3, "Save State     %d", UIMenu_Savestate);
+	UIMenu_ChangeItem(UIItems_MainMenu, 4, "Reset          %s", UIMenu_HardReset ? "Hard" : "Soft");
 
 	return 1;
 }
 
 char *UIMenuTxt_Palette[16] = {
-	"Default", "Old", "Black & White", "Green Palette",
-	"Green Vector",	"Red Palette", "Red Vector", "Blue LCD",
-	"LEDBacklight", "Girl Power", "Blue Palette", "Blue Vector",
-	"Sepia", "Inv. B&W", "Custom 1...", "Custom 2..."
+	"Default", "Old", "B&W", "Green",
+	"Green Vector",	"Red", "Red Vector", "Blue LCD",
+	"LED BG", "Girl Power", "Blue", "Blue Vector",
+	"Sepia", "Inv. B&W", "Custom 1", "Custom 2"
 };
 
 char *UIMenuTxt_LCDMode[4] = {
@@ -751,7 +751,7 @@ char *UIMenuTxt_Battery[3] = {
 };
 
 char *UIMenuTxt_RTC[3] = {
-	"Off", "State time diff.", "From Host"
+	"Off", "State diff", "From Host"
 };
 
 char *UIMenuTxt_Multicart[3] = {
@@ -918,32 +918,31 @@ int UIItems_OptionsC(int index, int reason)
 		}
 	}
 
-	// Update items
-	UIMenu_ChangeItem(UIItems_Options,  1, "Palette: %s", UIMenuTxt_Palette[CommandLine.palette]);
-	UIMenu_ChangeItem(UIItems_Options,  2, "LCD Mode: %s", UIMenuTxt_LCDMode[CommandLine.lcdmode]);
-	UIMenu_ChangeItem(UIItems_Options,  3, "LCD Filter: %s", UIMenuTxt_LCDFilter[CommandLine.lcdfilter]);
-	UIMenu_ChangeItem(UIItems_Options, 10, "Contrast: %i%%", CommandLine.lcdcontrast);
-	UIMenu_ChangeItem(UIItems_Options, 11, "Bright: %i%%", CommandLine.lcdbright);
+	UIMenu_ChangeItem(UIItems_Options,  1, "Palette        %s", UIMenuTxt_Palette[CommandLine.palette]);
+	UIMenu_ChangeItem(UIItems_Options,  2, "LCD Mode       %s", UIMenuTxt_LCDMode[CommandLine.lcdmode]);
+	UIMenu_ChangeItem(UIItems_Options,  3, "LCD Filter     %s", UIMenuTxt_LCDFilter[CommandLine.lcdfilter]);
+	UIMenu_ChangeItem(UIItems_Options, 10, "Contrast       %i%%", CommandLine.lcdcontrast);
+	UIMenu_ChangeItem(UIItems_Options, 11, "Bright         %i%%", CommandLine.lcdbright);
 	if (PokeMini_Flags & POKEMINI_NOSOUND) {
 		CommandLine.sound = 0;
-		UIMenu_ChangeItem(UIItems_Options,  4, "Sound: Disabled");
+		UIMenu_ChangeItem(UIItems_Options,  4, "Sound          Disabled");
 	} else if (PokeMini_Flags & POKEMINI_GENSOUND) {
 		CommandLine.sound = CommandLine.sound ? 1 : 0;
-		UIMenu_ChangeItem(UIItems_Options,  4, "Sound: %s", UIMenuTxt_Enabled[CommandLine.sound]);
+		UIMenu_ChangeItem(UIItems_Options,  4, "Sound          %s", UIMenuTxt_Enabled[CommandLine.sound]);
 	} else {
-		UIMenu_ChangeItem(UIItems_Options,  4, "Sound: %s", UIMenuTxt_Sound[CommandLine.sound]);
+		UIMenu_ChangeItem(UIItems_Options,  4, "Sound          %s", UIMenuTxt_Sound[CommandLine.sound]);
 	}
-	UIMenu_ChangeItem(UIItems_Options,  5, "Piezo Filter: %s", CommandLine.piezofilter ? "Yes" : "No");
+	UIMenu_ChangeItem(UIItems_Options,  5, "Piezo Filter   %s", CommandLine.piezofilter ? "Yes" : "No");
 	if (PokeMini_Flags & POKEMINI_AUTOBATT) {
-		UIMenu_ChangeItem(UIItems_Options,  6, "PM Batt.: %s (%s)", UIMenuTxt_Battery[CommandLine.low_battery], UIMenuTxt_Battery[PokeMini_HostBattStatus]);
+		UIMenu_ChangeItem(UIItems_Options,  6, "PM Battery     %s (%s)", UIMenuTxt_Battery[CommandLine.low_battery], UIMenuTxt_Battery[PokeMini_HostBattStatus]);
 	} else {
-		UIMenu_ChangeItem(UIItems_Options,  6, "PM Battery: %s", UIMenuTxt_Battery[CommandLine.low_battery]);
+		UIMenu_ChangeItem(UIItems_Options,  6, "PM Battery     %s", UIMenuTxt_Battery[CommandLine.low_battery]);
 	}
-	UIMenu_ChangeItem(UIItems_Options,  7, "RTC: %s", UIMenuTxt_RTC[CommandLine.updatertc]);
-	UIMenu_ChangeItem(UIItems_Options,  8, "Shared EEP.: %s", CommandLine.eeprom_share ? "Yes" : "No");
-	UIMenu_ChangeItem(UIItems_Options,  9, "Force FreeBIOS: %s", CommandLine.forcefreebios ? "Yes" : "No");
-	UIMenu_ChangeItem(UIItems_Options, 20, "Multicart: %s", UIMenuTxt_Multicart[CommandLine.multicart]);
-	UIMenu_ChangeItem(UIItems_Options, 50, "Sync Cycles: %d", CommandLine.synccycles);
+	UIMenu_ChangeItem(UIItems_Options,  7, "RTC            %s", UIMenuTxt_RTC[CommandLine.updatertc]);
+	UIMenu_ChangeItem(UIItems_Options,  8, "Shared EEPROM  %s", CommandLine.eeprom_share ? "Yes" : "No");
+	UIMenu_ChangeItem(UIItems_Options,  9, "Force FreeBIOS %s", CommandLine.forcefreebios ? "Yes" : "No");
+	UIMenu_ChangeItem(UIItems_Options, 20, "Multicart      %s", UIMenuTxt_Multicart[CommandLine.multicart]);
+	UIMenu_ChangeItem(UIItems_Options, 50, "Sync Cycles    %d", CommandLine.synccycles);
 
 	return 1;
 }
@@ -1415,8 +1414,8 @@ void UIMenu_Display_16(uint16_t *screen, int pitchW)
 		if (!strcmp(UIMenu_CurrentItems[UIMenu_CurrentItemsNum].caption, "Main Menu")) {
 			if (UI_PreviewDist){
 				// Preview
-				PokeMini_VideoRect_16(screen, pitchW, UIMenu_Width - 100 - UI_PreviewDist, 16 + UI_PreviewDist, 100, 68, 0x00000000);
-				PokeMini_VideoPreview_16(screen + ((18 + UI_PreviewDist) * pitchW) + (UIMenu_Width - 98 - UI_PreviewDist), pitchW, PokeMini_LCDMode);
+				PokeMini_VideoRect_16(screen, pitchW, UIMenu_Width - 100 - UI_PreviewDist, 16 + 50 + UI_PreviewDist, 100, 68, 0x00000000);
+				PokeMini_VideoPreview_16(screen + ((18 + UI_PreviewDist + 50) * pitchW) + (UIMenu_Width - 98 - UI_PreviewDist), pitchW, PokeMini_LCDMode);
 			}
 
 			// Loaded ROM
