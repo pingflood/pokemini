@@ -1395,11 +1395,6 @@ void UIMenu_Display_16(uint16_t *screen, int pitchW)
 
 	// Menu items
 	if (UIMenu_Page == UIPAGE_MENUITEMS) {
-		// Preview
-		if (UI_PreviewDist) {
-			PokeMini_VideoRect_16(screen, pitchW, UIMenu_Width - 100 - UI_PreviewDist, 16 + UI_PreviewDist, 100, 68, 0x00000000);
-			PokeMini_VideoPreview_16(screen + ((18 + UI_PreviewDist) * pitchW) + (UIMenu_Width - 98 - UI_PreviewDist), pitchW, PokeMini_LCDMode);
-		}
 
 		// More...
 		if ((UIMenu_CurrentItemsNum > UIMenu_MMax) && (UIMenu_Cur != (UIMenu_CurrentItemsNum-1))) {
@@ -1417,10 +1412,18 @@ void UIMenu_Display_16(uint16_t *screen, int pitchW)
 		// Cursor
 		UIDraw_Icon_16(screen, pitchW, 2, 20 + (UIMenu_Cur-UIMenu_MOff)*12, ((UIMenu_Ani>>2) & 3));
 
-		// Loaded ROM
-		sprintf(text, "ROM: %s", CommandLine.min_file);
-		text[(UIMenu_Width/padd)-1] = 0; // Avoid string going out of the screen
-		UIDraw_String_16(screen, pitchW, 2, 20 + (UIMenu_MMax+1)*12, padd, text, UI_Font1_Pal16);
+		if (!strcmp(UIMenu_CurrentItems[UIMenu_CurrentItemsNum].caption, "Main Menu")) {
+			if (UI_PreviewDist){
+				// Preview
+				PokeMini_VideoRect_16(screen, pitchW, UIMenu_Width - 100 - UI_PreviewDist, 16 + UI_PreviewDist, 100, 68, 0x00000000);
+				PokeMini_VideoPreview_16(screen + ((18 + UI_PreviewDist) * pitchW) + (UIMenu_Width - 98 - UI_PreviewDist), pitchW, PokeMini_LCDMode);
+			}
+
+			// Loaded ROM
+			sprintf(text, "ROM: %s", CommandLine.min_file);
+			text[(UIMenu_Width/padd)-1] = 0; // Avoid string going out of the screen
+			UIDraw_String_16(screen, pitchW, 2, 20 + (UIMenu_MMax+1)*12, padd, text, UI_Font1_Pal16);
+		}
 	}
 
 	// Load ROM
