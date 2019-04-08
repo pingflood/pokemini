@@ -1,24 +1,23 @@
 # PokeMini Makefile for Dingux
+CHAINPREFIX=/opt/mipsel-linux-uclibc
+CROSS_COMPILE=$(CHAINPREFIX)/usr/bin/mipsel-linux-
 
-DINGUX_TK = /opt/rs97-toolchain/usr
-HOST = mipsel-linux-
+CC = $(CROSS_COMPILE)gcc
+CXX = $(CROSS_COMPILE)g++
+LD = $(CROSS_COMPILE)gcc
 
-ifeq ($(DINGUX_TK),)
-CC = $(HOST)gcc
-LD = $(HOST)gcc
-STRIP = $(HOST)strip
-else
-CC = $(DINGUX_TK)/bin/$(HOST)gcc
-LD = $(DINGUX_TK)/bin/$(HOST)gcc
-STRIP = $(DINGUX_TK)/bin/$(HOST)strip
-endif
+SYSROOT     := $(CHAINPREFIX)/usr/mipsel-buildroot-linux-uclibc/sysroot
+SDL_CFLAGS  := $(shell $(SYSROOT)/usr/bin/sdl-config --cflags)
+SDL_LIBS    := $(shell $(SYSROOT)/usr/bin/sdl-config --libs)
 
-BUILD = Build
+BUILD = ./
 TARGET = pokemini.dge
 POKEROOT = ../../
 
-CFLAGS = -Ofast -mplt -mips32 -Wall -s -lSDL $(INCLUDE) -DPERFORMANCE -DNO_SCANDIRS
-SLFLAGS = -Ofast -mips32 -lm -lz -s -lSDL
+INCLUDE = $(foreach inc, $(INCDIRS), -I$(POKEROOT)$(inc))
+
+CFLAGS = -Ofast -mplt -mips32 -Wall -s -lSDL $(SDL_CFLAGS) $(INCLUDE) -DPERFORMANCE -DNO_SCANDIRS -DNO_ZIP
+LDFLAGS = -Ofast -mips32 -lm -lz -s -lSDL $(SDL_LIBS)
 
 INCDIRS = source resource freebios dependencies/minizip
 
@@ -46,8 +45,6 @@ OBJS = \
  source/MinxAudio.o	\
  source/UI.o	\
  source/Joystick.o	\
- dependencies/minizip/unzip.o	\
- dependencies/minizip/ioapi.o	\
  resource/PokeMini_ColorPal.o	\
  resource/PokeMini_Font12.o	\
  resource/PokeMini_Icons12.o	\
@@ -74,8 +71,6 @@ DEPENDS = \
  source/MinxAudio.h	\
  source/UI.h	\
  source/Joystick.h	\
- dependencies/minizip/unzip.h	\
- dependencies/minizip/ioapi.h	\
  resource/PokeMini_ColorPal.h	\
  resource/PokeMini_Font12.h	\
  resource/PokeMini_Icons12.h	\
@@ -83,7 +78,6 @@ DEPENDS = \
 
 BUILDOBJS = $(addprefix $(BUILD)/, $(notdir $(OBJS)))
 DEPENDSHDR = $(addprefix $(POKEROOT), $(DEPENDS))
-INCLUDE = $(foreach inc, $(INCDIRS), -I$(POKEROOT)$(inc))
 VPATH = $(addprefix $(POKEROOT),$(INCDIRS))
 
 .PHONY: all clean
@@ -97,7 +91,7 @@ $(BUILD)/%.o: %.c $(DEPENDSHDR)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 $(TARGET): $(BUILDOBJS)
-	$(LD) -o $(TARGET) $(BUILDOBJS) $(SLFLAGS)
+	$(LD) -o $(TARGET) $(BUILDOBJS) $(LDFLAGS)
 	$(STRIP) $(TARGET)
 
 clean:

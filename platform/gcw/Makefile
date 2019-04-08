@@ -1,5 +1,5 @@
 # PokeMini Makefile for Dingux
-DINGUX_TK = /opt/gcw0-toolchain/usr
+DINGUX_TK = /opt/mipsel-linux-uclibc/usr
 HOST = mipsel-linux-
 
 ifeq ($(DINGUX_TK),)
@@ -12,11 +12,11 @@ LD = $(DINGUX_TK)/bin/$(HOST)gcc
 STRIP = $(DINGUX_TK)/bin/$(HOST)strip
 endif
 
-BUILD = Build
-TARGET = pokemini
+BUILD = ./
+TARGET = pokemini.dge
 POKEROOT = ../../
 
-CFLAGS = -O2 -Wall -s -lSDL -Wl,--as-needed $(INCLUDE) -DPERFORMANCE -mips32r2 -DNO_SCANDIRS -I/opt/gcw0-toolchain/usr/mipsel-gcw0-linux-uclibc/sysroot/usr/include
+CFLAGS = -O2 -Wall -s -lSDL -Wl,--as-needed $(INCLUDE) -DPERFORMANCE -mips32r2 -DNO_SCANDIRS -I/opt/mipsel-linux-uclibc/usr/mipsel-buildroot-linux-uclibc/sysroot/usr/include  -DNO_ZIP
 SLFLAGS = -O2 -lm -lz -s -lSDL -Wl,--as-needed
 
 INCDIRS = source resource freebios dependencies/minizip
@@ -45,8 +45,6 @@ OBJS = \
  source/MinxAudio.o	\
  source/UI.o	\
  source/Joystick.o	\
- dependencies/minizip/unzip.o	\
- dependencies/minizip/ioapi.o	\
  resource/PokeMini_ColorPal.o	\
  resource/PokeMini_Font12.o	\
  resource/PokeMini_Icons12.o	\
@@ -73,8 +71,6 @@ DEPENDS = \
  source/MinxAudio.h	\
  source/UI.h	\
  source/Joystick.h	\
- dependencies/minizip/unzip.h	\
- dependencies/minizip/ioapi.h	\
  resource/PokeMini_ColorPal.h	\
  resource/PokeMini_Font12.h	\
  resource/PokeMini_Icons12.h	\
