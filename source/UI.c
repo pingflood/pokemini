@@ -220,23 +220,23 @@ enum {
 
 int UIItems_MainMenuC(int index, int reason);
 TUIMenu_Item UIItems_MainMenu[] = {
-	{ 0,  0, "Resume...", UIItems_MainMenuC },
+	// { 0,  0, "Resume...", UIItems_MainMenuC },
 #ifndef NO_SCANDIRS
-	{ 0,  1, "Load ROM...", UIItems_MainMenuC },
+	{ 0,  1, "Load ROM", UIItems_MainMenuC },
 #endif
 	{ 0,  2, "Load State <0>", UIItems_MainMenuC },
 	{ 0,  3, "Save State <0>", UIItems_MainMenuC },
 	{ 0,  4, "Reset <Hard>", UIItems_MainMenuC },
-	{ 0,  5, "Options...", UIItems_MainMenuC },
-	{ 0,  6, "Platform...", UIItems_MainMenuC },
-	{ 0,  7, "About...", UIItems_MainMenuC },
+	{ 0,  5, "Options", UIItems_MainMenuC },
+	{ 0,  6, "Platform", UIItems_MainMenuC },
+	{ 0,  7, "About", UIItems_MainMenuC },
 	{ 0,  8, "Exit", UIItems_MainMenuC },
 	{ 9,  0, "Main Menu", UIItems_MainMenuC }
 };
 
 int UIItems_OptionsC(int index, int reason);
 TUIMenu_Item UIItems_Options[] = {
-	{ 0,  0, "Go Back...", UIItems_OptionsC },
+	// { 0,  0, "Go Back...", UIItems_OptionsC },
 	{ 0,  1, "Palette: %s", UIItems_OptionsC },
 	{ 0,  2, "LCD Mode: %s", UIItems_OptionsC },
 	{ 0,  3, "LCD Filter: %s", UIItems_OptionsC },
@@ -252,14 +252,14 @@ TUIMenu_Item UIItems_Options[] = {
 	{ 0, 20, "Multicart: %s", UIItems_OptionsC },
 #endif
 	{ 0, 50, "Sync Cycles: %d", UIItems_OptionsC },
-	{ 0, 60, "Reload Color Info...", UIItems_OptionsC },
-	{ 0, 99, "Save Configs...", UIItems_OptionsC },
+	{ 0, 60, "Reload Color Info", UIItems_OptionsC },
+	{ 0, 99, "Save Configs", UIItems_OptionsC },
 	{ 9,  0, "Options", UIItems_OptionsC }
 };
 
 int UIItems_PalEditC(int index, int reason);
 TUIMenu_Item UIItems_PalEdit[] = {
-	{ 0,  0, "Go Back...", UIItems_PalEditC },
+	// { 0,  0, "Go Back...", UIItems_PalEditC },
 	{ 0,  1, "1-Light   Red: %d", UIItems_PalEditC },
 	{ 0,  2, "1-Light Green: %d", UIItems_PalEditC },
 	{ 0,  3, "1-Light  Blue: %d", UIItems_PalEditC },
@@ -624,7 +624,7 @@ int UIItems_MainMenuC(int index, int reason)
 				break;
 			case 2: // Load state
 				UIMenu_BeginMessage();
-				UIMenu_SetMessage("Load state...", 1);
+				UIMenu_SetMessage("Loading state...", 1);
 				UIMenu_SetMessage("", 1);
 				sprintf(tmp, "%s.st%d", CommandLine.min_file, UIMenu_Savestate);
 				if (PokeMini_LoadSSFile(tmp)) {
@@ -637,7 +637,7 @@ int UIItems_MainMenuC(int index, int reason)
 				break;
 			case 3: // Save state
 				UIMenu_BeginMessage();
-				UIMenu_SetMessage("Save state...", 1);
+				UIMenu_SetMessage("Saving state...", 1);
 				UIMenu_SetMessage("", 1);
 				sprintf(tmp, "%s.st%d", CommandLine.min_file, UIMenu_Savestate);
 				if (PokeMini_SaveSSFile(tmp, CommandLine.min_file)) {
@@ -784,7 +784,7 @@ int UIItems_OptionsC(int index, int reason)
 				break;
 			case 60: // Reload Color Info...
 				UIMenu_BeginMessage();
-				UIMenu_SetMessage("Reload Color Info...", 1);
+				UIMenu_SetMessage("Reloading Color Info...", 1);
 				UIMenu_SetMessage("", 1);
 				sprintf(tmp, "%sc", CommandLine.min_file);
 				if (!FileExist(tmp) || !PokeMini_LoadColorFile(tmp)) {
@@ -799,7 +799,7 @@ int UIItems_OptionsC(int index, int reason)
 				break;
 			case 99: // Save configs...
 				UIMenu_BeginMessage();
-				UIMenu_SetMessage("Save Configs...", 1);
+				UIMenu_SetMessage("Saving Configs...", 1);
 				UIMenu_SetMessage("", 1);
 				PokeMini_GotoExecDir();
 				if (CommandLineConfSave()) {
@@ -1028,7 +1028,7 @@ int UIItems_PlatformDefC(int index, int reason)
 	if (reason == UIMENU_OK) {
 		if (index == 99) { // Save configs...
 			UIMenu_BeginMessage();
-			UIMenu_SetMessage("Save Configs...", 1);
+			UIMenu_SetMessage("Saving Configs...", 1);
 			UIMenu_SetMessage("", 1);
 			PokeMini_GotoExecDir();
 			if (CommandLineConfSave()) {
