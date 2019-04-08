@@ -253,7 +253,7 @@ TUIMenu_Item UIItems_Options[] = {
 #endif
 	{ 0, 50, "Sync Cycles: %d", UIItems_OptionsC },
 	{ 0, 60, "Reload Color Info", UIItems_OptionsC },
-	{ 0, 99, "Save Configs", UIItems_OptionsC },
+	{ 0, 99, "Save Settings", UIItems_OptionsC },
 	{ 9,  0, "Options", UIItems_OptionsC }
 };
 

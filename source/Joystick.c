@@ -48,9 +48,7 @@ static const char *JoyLastIndexStr[] = {
 // Joystick menu
 int UIItems_JoystickC(int index, int reason);
 TUIMenu_Item UIItems_Joystick[] = {
-	{ 0,  0, "Go back...", UIItems_JoystickC },
-	{ 0,  1, "Apply changes...", UIItems_JoystickC },
-	{ 0, 21, "Check inputs...", UIItems_JoystickC },
+	// { 0,  0, "Go back...", UIItems_JoystickC },
 	{ 0,  2, "Enable Joystick: %s", UIItems_JoystickC },
 	{ 0, 20, "Device Index: %i", UIItems_JoystickC },
 	{ 0,  3, "Axis as D-Pad: %s", UIItems_JoystickC },
@@ -66,6 +64,8 @@ TUIMenu_Item UIItems_Joystick[] = {
 	{ 0, 16, "Power", UIItems_JoystickC },
 	{ 0, 17, "Shake", UIItems_JoystickC },
 	{ 9,  0, "Joystick", UIItems_JoystickC }
+	{ 0, 21, "Test buttons", UIItems_JoystickC },
+	{ 0,  1, "Apply settings", UIItems_JoystickC },
 };
 
 static const char *PM_Keys[] = {

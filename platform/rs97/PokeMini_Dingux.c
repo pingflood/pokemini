@@ -74,7 +74,7 @@ int Joy_KeysMapping[] = {
 int UIItems_PlatformC(int index, int reason);
 TUIMenu_Item UIItems_Platform[] = {
 	PLATFORMDEF_GOBACK,
-	{ 0,  9, "Define Joystick...", UIItems_PlatformC },
+	{ 0,  9, "Define Joystick", UIItems_PlatformC },
 	PLATFORMDEF_SAVEOPTIONS,
 	PLATFORMDEF_END(UIItems_PlatformC)
 };
